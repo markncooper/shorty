@@ -2,10 +2,21 @@ import sbt.Keys.scalaVersion
 
 name := """shorty"""
 organization := "com.brigade"
+rpmVendor := "brigade"
+enablePlugins(RpmPlugin)
 
 version := System.getProperty("BUILD_VERSION", "1.0-SNAPSHOT")
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala, RpmPlugin)
+
+maintainer in Linux := "Mark Cooper <markncooper@gmail.com>"
+
+packageSummary in Linux := "Shorty - a very simple url shortener"
+packageDescription := "Shorty - a very simple url shortener. Implemented as a Play service."
+rpmRelease := "1"
+rpmVendor := "brigade.com"
+rpmUrl := Some("http://github.com/markncooper/shorty")
+rpmLicense := Some("Apache v2")
 
 scalaVersion := "2.11.8"
 
@@ -42,12 +53,3 @@ artifact in (Compile, assembly) := {
 
 addArtifact(artifact in (Compile, assembly), assembly)
 
-//
-// Publish fat runnable jar to Nexus. Started via:
-//    sbt clean assembly publish
-//
-credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.brigade.zone", "jenkins", "oIy8BYbDVCAvS3kJ7xHERmBmCBN4dGiAgFNeLeUGReunW")
-publishTo := Some("Brigade Nexus Repo" at "http://nexus.brigade.zone/nexus/content/repositories/releases/")
-
-// Uncomment to test local deploys
-//publishTo := Some(Resolver.file("file",  new File( "/Users/mcooper/.m2/test" )) )
