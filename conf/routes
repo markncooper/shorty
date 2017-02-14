@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+POST    /add                        controllers.HomeController.add
+GET     /delete                     controllers.HomeController.delete(short)
+GET     /:short/:original           controllers.HomeController.findOrAdd(short, original)
+GET     /                           controllers.HomeController.index
+
+
+# All other patterns failed to match? Must be a redirect
+GET     /:short                     controllers.HomeController.redirect(short)
+
+

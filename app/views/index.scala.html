@@ -1,0 +1,34 @@
+@import b3.inline.fieldConstructor
+@import com.brigade.shorty.ShortUrl
+
+@(existingShortcuts: Seq[ShortUrl], addForm: Form[ShortUrl])(implicit messages: Messages)
+
+@main("Shorty Config") {
+
+    <div class="container center_div">
+
+    @b3.form(routes.HomeController.add){
+        @b3.text(addForm("original"), '_label -> "Original URL:", 'placeholder -> "http://yourdomain.com")
+        @b3.text(addForm("shortened"), '_label -> "Shortened Suffix:", 'placeholder -> "foobar")
+        @b3.submit('class -> "btn btn-default"){ Add }
+    }
+    </div>
+
+<table class="table table-striped table-hover" class="row">
+    <thead>
+    <th>Original URL</th>
+    <th></th>
+    <th>Shortened URL</th>
+    <th></th>
+    </thead>
+
+    @for(shortcut <- existingShortcuts) {
+        <tr>
+            <td>@shortcut.original</td>
+            <td> -> </td>
+            <td><a href="http://b/@shortcut.shortened">http://b/@shortcut.shortened</a></td>
+            <td><a href="@controllers.routes.HomeController.delete(shortcut.shortened)">delete</a></td>
+        </tr>
+    }
+</table>
+}
