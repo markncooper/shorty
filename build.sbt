@@ -31,6 +31,8 @@ libraryDependencies += "org.scalaj" %% "scalaj-http" % "2.3.0"
 libraryDependencies += "org.scala-lang" % "scala-library" % "2.11.8"
 libraryDependencies += "org.scala-lang" % "scala-compiler" % "2.11.8"
 
+libraryDependencies += "com.mixpanel" % "mixpanel-java" % "1.4.4"
+
 libraryDependencies += "com.adrianhurt" %% "play-bootstrap" % "1.1-P25-B3"
 
 mainClass in assembly := Some("play.core.server.ProdServerStart")
